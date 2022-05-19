@@ -5,39 +5,50 @@ import logging
 from itertools import izip
 from SARI import SARIsent
 from nltk.translate.bleu_score import *
+
 smooth = SmoothingFunction()
 from nltk import word_tokenize
 
-logging.basicConfig(format = u'[LINE:%(lineno)d]# %(levelname)-8s [%(asctime)s]  %(message)s', level = logging.NOTSET)
+logging.basicConfig(format=u'[LINE:%(lineno)d]# %(levelname)-8s [%(asctime)s]  %(message)s', level=logging.NOTSET)
+
 
 def files_in_folder(mypath):
-    return [ os.path.join(mypath,f) for f in os.listdir(mypath) if os.path.isfile(os.path.join(mypath,f)) ]
+    return [os.path.join(mypath, f) for f in os.listdir(mypath) if os.path.isfile(os.path.join(mypath, f))]
+
 
 def folders_in_folder(mypath):
-    return [ os.path.join(mypath,f) for f in os.listdir(mypath) if os.path.isdir(os.path.join(mypath,f)) ]
+    return [os.path.join(mypath, f) for f in os.listdir(mypath) if os.path.isdir(os.path.join(mypath, f))]
+
 
 def files_in_folder_only(mypath):
-    return [ f for f in os.listdir(mypath) if os.path.isfile(os.path.join(mypath,f)) ]
+    return [f for f in os.listdir(mypath) if os.path.isfile(os.path.join(mypath, f))]
+
 
 def remove_features(sent):
     tokens = sent.split(" ")
     return " ".join([token.split("|")[0] for token in tokens])
 
+
 def remove_underscores(sent):
     return sent.replace("_", " ")
+
 
 def replace_parant(sent):
     sent = sent.replace("-lrb-", "(").replace("-rrb-", ")")
     return sent.replace("(", "-lrb-").replace(")", "-rrb-")
 
+
 def lowstrip(sent):
     return sent.lower().strip()
+
 
 def normalize(sent):
     return replace_parant(lowstrip(sent))
 
+
 def as_is(sent):
     return sent
+
 
 def get_hypothesis(filename):
     hypothesis = '-'
@@ -47,18 +58,21 @@ def get_hypothesis(filename):
         hypothesis = '2'
     elif "_h3" in filename:
         hypothesis = '3'
-    elif "_h4" in filename: 
+    elif "_h4" in filename:
         hypothesis = '4'
     return hypothesis
+
 
 def mean(numbers):
     return float(sum(numbers)) / max(len(numbers), 1)
 
-def print_scores(pairs, whichone = ''):
+
+def print_scores(pairs, whichone=''):
     # replace filenames by hypothesis name for csv pretty print
-    for k,v in pairs:
+    for k, v in pairs:
         hypothesis = get_hypothesis(k)
-        print "\t".join( [whichone, "{:10.2f}".format(v), k, hypothesis] )
+        print("\t".join([whichone, "{:10.2f}".format(v), k, hypothesis]))
+
 
 def SARI_file(source, preds, refs, preprocess):
     files = [codecs.open(fis, "r", 'utf-8') for fis in [source, preds, refs]]
@@ -85,6 +99,7 @@ def BLEU_file(source, preds, refs, preprocess=as_is):
     # Smoothing method 3: NIST geometric sequence smoothing
     return corpus_bleu(references, hypothese, smoothing_function=smooth.method3)
 
+
 def score(source, refs, fold, METRIC_file, preprocess=as_is):
     new_files = files_in_folder(fold)
     data = []
@@ -92,13 +107,14 @@ def score(source, refs, fold, METRIC_file, preprocess=as_is):
         # ignore log files
         if ".log" in os.path.basename(fis):
             continue
-        logging.info("Processing "+os.path.basename(fis))
-        val = 100*METRIC_file(source, fis, refs, preprocess)
-        logging.info("Done "+str(val))
+        logging.info("Processing " + os.path.basename(fis))
+        val = 100 * METRIC_file(source, fis, refs, preprocess)
+        logging.info("Done " + str(val))
         data.append((os.path.basename(fis), val))
     data.sort(key=lambda tup: tup[1])
     data.reverse()
     return data
+
 
 if __name__ == '__main__':
     try:
@@ -109,8 +125,8 @@ if __name__ == '__main__':
         fold = sys.argv[3]
         logging.info("Directory of predictions: " + fold)
     except:
-        logging.error("Input parameters must be: " + sys.argv[0] 
-            + "    SOURCE_FILE    REFS_TSV (paste -d \"\t\" * > reference.tsv)    DIRECTORY_OF_PREDICTIONS")
+        logging.error("Input parameters must be: " + sys.argv[0]
+                      + "    SOURCE_FILE    REFS_TSV (paste -d \"\t\" * > reference.tsv)    DIRECTORY_OF_PREDICTIONS")
         sys.exit(1)
 
     '''
@@ -124,7 +140,7 @@ if __name__ == '__main__':
     bleu_test = score(source, refs, fold, BLEU_file, lowstrip)
 
     whichone = os.path.basename(os.path.abspath(os.path.join(fold, '..'))) + \
-                    '\t' + \
-                    os.path.basename(refs).replace('.ref', '').replace("test_0_", "")
+               '\t' + \
+               os.path.basename(refs).replace('.ref', '').replace("test_0_", "")
     print_scores(sari_test, "SARI\t" + whichone)
     print_scores(bleu_test, "BLEU\t" + whichone)
