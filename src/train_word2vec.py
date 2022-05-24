@@ -48,7 +48,7 @@ def train_w2v(fishier, wind=111, siz=200):
     model = Word2Vec([[wd.strip() for wd in word.split(' ') if wd.strip()] for word in sentences], size=siz, workers=10,
                      window=wind, min_count=1, max_vocab_size=None, sg=1, hs=1)
     logging.info('Saving...')
-    model.save_word2vec_format(fishier + '.bin', binary=True)
+    model.wv.save_word2vec_format(fishier + '.bin', binary=True)
     logging.info('Done!')
 
 
