@@ -1,1 +1,1 @@
-th train.lua -config ../configs/NTS.cfg
+th train.lua -config ../configs/NTS_default.cfg
