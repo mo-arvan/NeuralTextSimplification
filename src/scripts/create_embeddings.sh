@@ -2,7 +2,7 @@
 source ./base_conf.sh
 
 if [[ -z "${GLOBAL_EMBED}" ]]; then 
-  GLOBAL_EMBED=${DIRECTORY}/embed/GoogleNews-vectors-negative300.bin
+  GLOBAL_EMBED=${DIRECTORY}/embed/word2vec-google-news-300
   echo "GLOBAL_EMBED path is not set. Maybe run download_global_embeddings.sh first?";
   echo "The default is: "${GLOBAL_EMBED}
 fi 

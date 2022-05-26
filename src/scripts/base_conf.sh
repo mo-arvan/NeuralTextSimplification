@@ -3,11 +3,11 @@ CWD=`pwd`
 CUR_EXP=NTS
 DIRECTORY=`readlink -f ../../data`
 OPENNMT_PATH=`readlink -f ../../OpenNMT`
-
-if [[ -z "${OPENNMT_PATH}" ]]; then 
+if [[ -z "${OPENNMT_PATH}" ]]; then
   echo "OPENNMT_PATH is unset, please update base_conf.sh"; 
-fi 
+fi
 
+GLOBAL_EMBED=${DIRECTORY}/embed/word2vec-google-news-300
 DATA_DIRECTORY=${DIRECTORY}
 DATA_OUT=${CUR_EXP}
 MODEL_DIRECTORY=${DIRECTORY}/models/${CUR_EXP}
