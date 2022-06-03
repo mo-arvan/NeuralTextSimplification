@@ -1,7 +1,26 @@
 FROM nagadomi/torch7:cuda10.1-cudnn7-devel-ubuntu18.04
 
-ENV PYTHON_VERSION 2.7.18
-ENV PYENV_GIT_TAG=v2.2.5
+RUN apt-key adv --fetch-keys https://developer.download.nvidia.com/compute/cuda/repos/ubuntu1804/x86_64/3bf863cc.pub && \
+    git config --global url."https://".insteadOf git:// && \
+    apt-get update &&  \
+    apt-get install -y \
+        build-essential \
+        python-dev \
+        python-pip \
+        wget \
+        curl \
+        git \
+        software-properties-common
+
+COPY setup/requirements.txt /opt/app/requirements.txt
+
+RUN pip install -r /opt/app/requirements.txt &&  \
+    python -c "import nltk; nltk.download('punkt')" && \
+    luarocks install tds && \
+    luarocks install lua-zlib \
+
+#ENV PYTHON_VERSION 2.7.18
+#ENV PYENV_GIT_TAG=v2.2.5
 
 #RUN apt-get update && \
 #    apt-get install -y make build-essential libssl-dev \
@@ -23,21 +42,8 @@ ENV PYENV_GIT_TAG=v2.2.5
 #RUN apt-key del 7fa2af80 && \
 #    wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu1804/x86_64/cuda-keyring_1.0-1_all.deb &&  \
 #    dpkg -i cuda-keyring_1.0-1_all.deb
-COPY setup/requirements.txt /opt/app/requirements.txt
 
-RUN apt-key adv --fetch-keys https://developer.download.nvidia.com/compute/cuda/repos/ubuntu1804/x86_64/3bf863cc.pub && \
-    git config --global url."https://".insteadOf git:// && \
-    apt-get update &&  \
-    apt-get install -y \
-        build-essential \
-        python-dev \
-        python-pip \
-        wget \
-        curl \
-        git \
-        software-properties-common
 
-RUN pip install -r /opt/app/requirements.txt
 
 
 #RUN curl -s https://raw.githubusercontent.com/torch/ezinstall/master/install-deps | bash -e
@@ -71,11 +77,6 @@ RUN pip install -r /opt/app/requirements.txt
 #    pip install -r src/requirements.txt && \
 #    python src/download_models.py ./models
 
-RUN luarocks install tds #&&
-#    luarocks install lua-zmq &&  \
-#    luarocks install restserver-xavante && \
-#    luarocks install dkjson && \
-#    luarocks install lua-zlib
 
 
 
