@@ -5,6 +5,9 @@ import logging
 from itertools import izip
 from SARI import SARIsent
 from nltk.translate.bleu_score import *
+import csv
+import time
+import re
 
 smooth = SmoothingFunction()
 from nltk import word_tokenize
@@ -116,6 +119,41 @@ def score(source, refs, fold, METRIC_file, preprocess=as_is):
     return data
 
 
+def export_to_csv(sari_results, bleu_results):
+    results_file_name = "evaluation_results_" + time.strftime("%Y%m%d-%H%M%S") + ".csv"
+    fields = ['Metric', 'File', 'Variant', 'Epoch', 'Hypothesis', 'Perplexity', 'Score']
+
+    file_pattern = r"result_(?P<variant>\S+)?_epoch(?P<epoch>\d+)_(?P<perplexity>\d+\.\d+)"
+    rows = []
+    for metric_name, pairs in zip(["SARI", "BLEU"], [sari_results, bleu_results]):
+        for file_name, metric_score in pairs:
+            hypothesis = get_hypothesis(file_name)
+            match_result = re.match(file_pattern, file_name)
+            if match_result:
+                rows.append([metric_name,
+                             file_name,
+                             match_result.group("variant"),
+                             match_result.group("epoch"),
+                             hypothesis,
+                             match_result.group("perplexity"),
+                             metric_score])
+            else:
+                logging.info(file_name + " failed")
+                rows.append([metric_name,
+                             file_name,
+                             "",
+                             "",
+                             hypothesis,
+                             "",
+                             metric_score])
+            # print("\t".join([whichone, "{:10.2f}".format(v), k, hypothesis]))
+    with open(results_file_name, 'w') as csvfile:
+        csvwriter = csv.writer(csvfile)
+        csvwriter.writerow(fields)
+        csvwriter.writerows(rows)
+    logging.info("Result exported in {}".format(results_file_name))
+
+
 if __name__ == '__main__':
     try:
         source = sys.argv[1]
@@ -144,3 +182,4 @@ if __name__ == '__main__':
                os.path.basename(refs).replace('.ref', '').replace("test_0_", "")
     print_scores(sari_test, "SARI\t" + whichone)
     print_scores(bleu_test, "BLEU\t" + whichone)
+    export_to_csv(sari_test, bleu_test)
