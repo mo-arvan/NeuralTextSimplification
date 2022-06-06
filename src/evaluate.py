@@ -119,8 +119,7 @@ def score(source, refs, fold, METRIC_file, preprocess=as_is):
     return data
 
 
-def export_to_csv(sari_results, bleu_results):
-    results_file_name = "evaluation_results_" + time.strftime("%Y%m%d-%H%M%S") + ".csv"
+def export_to_csv(sari_results, bleu_results, source, refs, fold):
     fields = ['Metric', 'File', 'Variant', 'Epoch', 'Hypothesis', 'Perplexity', 'Score']
 
     file_pattern = r"result_(?P<variant>\S+)?_epoch(?P<epoch>\d+)_(?P<perplexity>\d+\.\d+)"
@@ -147,6 +146,11 @@ def export_to_csv(sari_results, bleu_results):
                              "",
                              metric_score])
             # print("\t".join([whichone, "{:10.2f}".format(v), k, hypothesis]))
+    results_file_name = "evaluation_results_{}_{}_{}_{}.csv".format(source,
+                                                                    refs,
+                                                                    fold,
+                                                                    time.strftime("%Y%m%d-%H%M%S"))
+
     with open(results_file_name, 'w') as csvfile:
         csvwriter = csv.writer(csvfile)
         csvwriter.writerow(fields)
@@ -182,4 +186,4 @@ if __name__ == '__main__':
                os.path.basename(refs).replace('.ref', '').replace("test_0_", "")
     print_scores(sari_test, "SARI\t" + whichone)
     print_scores(bleu_test, "BLEU\t" + whichone)
-    export_to_csv(sari_test, bleu_test)
+    export_to_csv(sari_test, bleu_test, source, refs, fold)
