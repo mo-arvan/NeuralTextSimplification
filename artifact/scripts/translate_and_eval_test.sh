@@ -17,8 +17,8 @@ mkdir -p $RES_DIR
 
 # dev_eval.en and dev_eval.sen for validation
 
-SRC=${DIRECTORY}/eval.en
-TGT=${DIRECTORY}/eval.sen
+SRC=${DIRECTORY}/test.en
+TGT=${DIRECTORY}/test.sen
 TGT_REF=${DIRECTORY}/references/references.tsv
 
 source /workspace/artifact/scripts/translate_and_eval_base.sh
