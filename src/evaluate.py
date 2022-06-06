@@ -146,6 +146,7 @@ def export_to_csv(sari_results, bleu_results, source, refs, fold):
                              "",
                              metric_score])
             # print("\t".join([whichone, "{:10.2f}".format(v), k, hypothesis]))
+    source, refs, fold = os.path.basename(source), os.path.basename(refs), os.path.basename(fold)
     results_file_name = "evaluation_results_{}_{}_{}_{}.csv".format(source,
                                                                     refs,
                                                                     fold,
