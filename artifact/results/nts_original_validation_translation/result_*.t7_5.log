@@ -1,0 +1,3 @@
+[06/06/22 21:34:06 INFO] Using GPU(s): 1
+[06/06/22 21:34:06 WARNING] The caching CUDA memory allocator is enabled. This allocator improves performance at the cost of a higher GPU memory usage. To optimize for memory, consider disabling it by setting the environment variable: THC_CACHING_ALLOCATOR=0
+[06/06/22 21:34:06 INFO] Loading '/workspace/nts_original/*/*.t7'...
