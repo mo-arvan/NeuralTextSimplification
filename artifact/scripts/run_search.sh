@@ -1,4 +1,5 @@
 #!/bin/bash
+# ./artifact/scripts/run_search.sh /workspace/configs/nts_search_configs/0
 
 CONFIG_DIRECTORY=$1
 CWD=`pwd`
