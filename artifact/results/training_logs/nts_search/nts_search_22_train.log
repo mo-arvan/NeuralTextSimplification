@@ -1,0 +1,105 @@
+[06/05/22 14:19:00 INFO] Using GPU(s): 1
+[06/05/22 14:19:00 WARNING] The caching CUDA memory allocator is enabled. This allocator improves performance at the cost of a higher GPU memory usage. To optimize for memory, consider disabling it by setting the environment variable: THC_CACHING_ALLOCATOR=0
+[06/05/22 14:19:00 INFO] Training Sequence to Sequence with Attention model
+[06/05/22 14:19:00 INFO] Loading data from '/workspace/data/NTS-train.t7'...
+[06/05/22 14:19:12 INFO]  * vocabulary size: source = 50004; target = 50004
+[06/05/22 14:19:12 INFO]  * additional features: source = 0; target = 0
+[06/05/22 14:19:12 INFO]  * maximum sequence length: source = 80; target = 81
+[06/05/22 14:19:12 INFO]  * number of training sentences: 282954
+[06/05/22 14:19:12 INFO]  * 1147 batches, max size: 256 (even), avg size: 246.690497, capacity: 100%
+[06/05/22 14:19:12 INFO] Building model...
+[06/05/22 14:19:12 INFO]  * Encoder:
+[06/05/22 14:19:13 INFO]    - with word embeddings size: 512
+[06/05/22 14:19:13 INFO]    - Simple LSTM Encoder: 2 layers, rnn_size 512, dropout 0.3
+[06/05/22 14:19:14 INFO]  * Decoder:
+[06/05/22 14:19:15 INFO]    - with word embeddings size: 512
+[06/05/22 14:19:15 INFO]    - Global Attention: general
+[06/05/22 14:19:16 INFO] Initializing parameters...
+[06/05/22 14:19:18 INFO]  * number of parameters: 87096148
+[06/05/22 14:19:18 INFO] Preparing memory optimization...
+[06/05/22 14:19:19 INFO]  * sharing 69% of output/gradInput tensors memory between clones
+[06/05/22 14:19:19 INFO] Start training...
+[06/05/22 14:19:19 INFO] 
+[06/05/22 14:23:46 INFO] Epoch 1 ; Iteration 500/1147 ; Learning rate 1.0000 ; Source tokens/s 11590 ; Perplexity 2557.69
+[06/05/22 14:28:05 INFO] Epoch 1 ; Iteration 1000/1147 ; Learning rate 1.0000 ; Source tokens/s 12429 ; Perplexity 439.63
+[06/05/22 14:29:21 INFO] Epoch 1 ; Iteration 1147/1147 ; Learning rate 1.0000 ; Source tokens/s 12124 ; Perplexity 312.45
+[06/05/22 14:29:30 INFO] Validation perplexity: 419.27
+[06/05/22 14:29:30 INFO] Saving checkpoint to '/workspace/models/nts_search_22_epoch1_419.27.t7'...
+[06/05/22 14:29:32 INFO] 
+[06/05/22 14:33:51 INFO] Epoch 2 ; Iteration 500/1147 ; Learning rate 1.0000 ; Source tokens/s 12368 ; Perplexity 247.13
+[06/05/22 14:38:03 INFO] Epoch 2 ; Iteration 1000/1147 ; Learning rate 1.0000 ; Source tokens/s 12250 ; Perplexity 139.51
+[06/05/22 14:39:18 INFO] Epoch 2 ; Iteration 1147/1147 ; Learning rate 1.0000 ; Source tokens/s 12572 ; Perplexity 80.05
+[06/05/22 14:39:27 INFO] Validation perplexity: 66.98
+[06/05/22 14:39:27 INFO] Saving checkpoint to '/workspace/models/nts_search_22_epoch2_66.98.t7'...
+[06/05/22 14:39:30 INFO] 
+[06/05/22 14:43:45 INFO] Epoch 3 ; Iteration 500/1147 ; Learning rate 1.0000 ; Source tokens/s 12555 ; Perplexity 52.82
+[06/05/22 14:48:01 INFO] Epoch 3 ; Iteration 1000/1147 ; Learning rate 1.0000 ; Source tokens/s 12233 ; Perplexity 36.37
+[06/05/22 14:49:17 INFO] Epoch 3 ; Iteration 1147/1147 ; Learning rate 1.0000 ; Source tokens/s 11876 ; Perplexity 31.30
+[06/05/22 14:49:26 INFO] Validation perplexity: 22.90
+[06/05/22 14:49:26 INFO] Saving checkpoint to '/workspace/models/nts_search_22_epoch3_22.90.t7'...
+[06/05/22 14:49:28 INFO] 
+[06/05/22 14:53:42 INFO] Epoch 4 ; Iteration 500/1147 ; Learning rate 1.0000 ; Source tokens/s 12307 ; Perplexity 26.16
+[06/05/22 14:58:00 INFO] Epoch 4 ; Iteration 1000/1147 ; Learning rate 1.0000 ; Source tokens/s 12233 ; Perplexity 23.54
+[06/05/22 14:59:16 INFO] Epoch 4 ; Iteration 1147/1147 ; Learning rate 1.0000 ; Source tokens/s 12690 ; Perplexity 21.53
+[06/05/22 14:59:25 INFO] Validation perplexity: 17.47
+[06/05/22 14:59:25 INFO] Saving checkpoint to '/workspace/models/nts_search_22_epoch4_17.47.t7'...
+[06/05/22 14:59:27 INFO] 
+[06/05/22 15:03:44 INFO] Epoch 5 ; Iteration 500/1147 ; Learning rate 1.0000 ; Source tokens/s 12474 ; Perplexity 18.91
+[06/05/22 15:07:59 INFO] Epoch 5 ; Iteration 1000/1147 ; Learning rate 1.0000 ; Source tokens/s 12184 ; Perplexity 18.42
+[06/05/22 15:09:14 INFO] Epoch 5 ; Iteration 1147/1147 ; Learning rate 1.0000 ; Source tokens/s 12453 ; Perplexity 17.69
+[06/05/22 15:09:22 INFO] Validation perplexity: 13.62
+[06/05/22 15:09:22 INFO] Saving checkpoint to '/workspace/models/nts_search_22_epoch5_13.62.t7'...
+[06/05/22 15:09:25 INFO] 
+[06/05/22 15:13:42 INFO] Epoch 6 ; Iteration 500/1147 ; Learning rate 1.0000 ; Source tokens/s 12472 ; Perplexity 15.75
+[06/05/22 15:17:57 INFO] Epoch 6 ; Iteration 1000/1147 ; Learning rate 1.0000 ; Source tokens/s 12292 ; Perplexity 15.29
+[06/05/22 15:19:12 INFO] Epoch 6 ; Iteration 1147/1147 ; Learning rate 1.0000 ; Source tokens/s 12025 ; Perplexity 15.04
+[06/05/22 15:19:20 INFO] Validation perplexity: 13.59
+[06/05/22 15:19:20 INFO] Saving checkpoint to '/workspace/models/nts_search_22_epoch6_13.59.t7'...
+[06/05/22 15:19:22 INFO] 
+[06/05/22 15:23:35 INFO] Epoch 7 ; Iteration 500/1147 ; Learning rate 1.0000 ; Source tokens/s 12335 ; Perplexity 13.58
+[06/05/22 15:27:54 INFO] Epoch 7 ; Iteration 1000/1147 ; Learning rate 1.0000 ; Source tokens/s 12369 ; Perplexity 13.54
+[06/05/22 15:29:09 INFO] Epoch 7 ; Iteration 1147/1147 ; Learning rate 1.0000 ; Source tokens/s 12307 ; Perplexity 13.29
+[06/05/22 15:29:17 INFO] Validation perplexity: 13.08
+[06/05/22 15:29:17 INFO] Saving checkpoint to '/workspace/models/nts_search_22_epoch7_13.08.t7'...
+[06/05/22 15:29:20 INFO] 
+[06/05/22 15:33:35 INFO] Epoch 8 ; Iteration 500/1147 ; Learning rate 0.7000 ; Source tokens/s 12158 ; Perplexity 11.52
+[06/05/22 15:37:52 INFO] Epoch 8 ; Iteration 1000/1147 ; Learning rate 0.7000 ; Source tokens/s 12519 ; Perplexity 11.24
+[06/05/22 15:39:07 INFO] Epoch 8 ; Iteration 1147/1147 ; Learning rate 0.7000 ; Source tokens/s 12312 ; Perplexity 11.46
+[06/05/22 15:39:16 INFO] Validation perplexity: 11.42
+[06/05/22 15:39:16 INFO] Saving checkpoint to '/workspace/models/nts_search_22_epoch8_11.42.t7'...
+[06/05/22 15:39:18 INFO] 
+[06/05/22 15:43:32 INFO] Epoch 9 ; Iteration 500/1147 ; Learning rate 0.4900 ; Source tokens/s 12320 ; Perplexity 10.13
+[06/05/22 15:47:50 INFO] Epoch 9 ; Iteration 1000/1147 ; Learning rate 0.4900 ; Source tokens/s 12487 ; Perplexity 10.12
+[06/05/22 15:49:05 INFO] Epoch 9 ; Iteration 1147/1147 ; Learning rate 0.4900 ; Source tokens/s 11870 ; Perplexity 10.33
+[06/05/22 15:49:14 INFO] Validation perplexity: 10.89
+[06/05/22 15:49:14 INFO] Saving checkpoint to '/workspace/models/nts_search_22_epoch9_10.89.t7'...
+[06/05/22 15:49:16 INFO] 
+[06/05/22 15:53:31 INFO] Epoch 10 ; Iteration 500/1147 ; Learning rate 0.3430 ; Source tokens/s 12017 ; Perplexity 9.35
+[06/05/22 15:57:47 INFO] Epoch 10 ; Iteration 1000/1147 ; Learning rate 0.3430 ; Source tokens/s 12583 ; Perplexity 9.43
+[06/05/22 15:59:03 INFO] Epoch 10 ; Iteration 1147/1147 ; Learning rate 0.3430 ; Source tokens/s 12589 ; Perplexity 9.27
+[06/05/22 15:59:12 INFO] Validation perplexity: 10.53
+[06/05/22 15:59:12 INFO] Saving checkpoint to '/workspace/models/nts_search_22_epoch10_10.53.t7'...
+[06/05/22 15:59:14 INFO] 
+[06/05/22 16:03:29 INFO] Epoch 11 ; Iteration 500/1147 ; Learning rate 0.2401 ; Source tokens/s 12175 ; Perplexity 8.90
+[06/05/22 16:07:47 INFO] Epoch 11 ; Iteration 1000/1147 ; Learning rate 0.2401 ; Source tokens/s 12528 ; Perplexity 8.79
+[06/05/22 16:09:01 INFO] Epoch 11 ; Iteration 1147/1147 ; Learning rate 0.2401 ; Source tokens/s 12168 ; Perplexity 9.07
+[06/05/22 16:09:10 INFO] Validation perplexity: 10.39
+[06/05/22 16:09:10 INFO] Saving checkpoint to '/workspace/models/nts_search_22_epoch11_10.39.t7'...
+[06/05/22 16:09:12 INFO] 
+[06/05/22 16:13:28 INFO] Epoch 12 ; Iteration 500/1147 ; Learning rate 0.1681 ; Source tokens/s 12420 ; Perplexity 8.51
+[06/05/22 16:17:44 INFO] Epoch 12 ; Iteration 1000/1147 ; Learning rate 0.1681 ; Source tokens/s 12167 ; Perplexity 8.50
+[06/05/22 16:18:59 INFO] Epoch 12 ; Iteration 1147/1147 ; Learning rate 0.1681 ; Source tokens/s 12581 ; Perplexity 8.61
+[06/05/22 16:19:08 INFO] Validation perplexity: 10.37
+[06/05/22 16:19:08 INFO] Saving checkpoint to '/workspace/models/nts_search_22_epoch12_10.37.t7'...
+[06/05/22 16:19:10 INFO] 
+[06/05/22 16:23:25 INFO] Epoch 13 ; Iteration 500/1147 ; Learning rate 0.1176 ; Source tokens/s 12523 ; Perplexity 8.21
+[06/05/22 16:27:43 INFO] Epoch 13 ; Iteration 1000/1147 ; Learning rate 0.1176 ; Source tokens/s 12436 ; Perplexity 8.28
+[06/05/22 16:28:58 INFO] Epoch 13 ; Iteration 1147/1147 ; Learning rate 0.1176 ; Source tokens/s 11271 ; Perplexity 8.53
+[06/05/22 16:29:06 INFO] Validation perplexity: 10.32
+[06/05/22 16:29:06 INFO] Saving checkpoint to '/workspace/models/nts_search_22_epoch13_10.32.t7'...
+[06/05/22 16:29:09 INFO] 
+[06/05/22 16:33:21 INFO] Epoch 14 ; Iteration 500/1147 ; Learning rate 0.0824 ; Source tokens/s 12110 ; Perplexity 8.07
+[06/05/22 16:37:39 INFO] Epoch 14 ; Iteration 1000/1147 ; Learning rate 0.0824 ; Source tokens/s 12406 ; Perplexity 8.13
+[06/05/22 16:38:56 INFO] Epoch 14 ; Iteration 1147/1147 ; Learning rate 0.0824 ; Source tokens/s 12780 ; Perplexity 8.20
+[06/05/22 16:39:05 INFO] Validation perplexity: 10.34
+[06/05/22 16:39:05 INFO] Saving checkpoint to '/workspace/models/nts_search_22_epoch14_10.34.t7'...
