@@ -9,13 +9,16 @@ MODEL=${MODEL_PATH##*/}
 BEAM_SIZE=5
 #GPUS=1,2
 GPUS=2
+
 OUTPUT=${RES_DIR}/result_${MODEL}_${BEAM_SIZE}
 LOG_OUT=${RES_DIR}/result_${MODEL}_${BEAM_SIZE}.log
 
-SRC=${DIRECTORY}/test.en
-TGT=${DIRECTORY}/test.sen
+SRC=${DIRECTORY}/dev.en
+TGT=${DIRECTORY}/dev.sen
+
 cd $OPENNMT_PATH 
 
 th translate.lua -replace_unk -beam_size ${BEAM_SIZE} -gpuid ${GPUS} -n_best 4 -model ${MODEL_PATH} -src ${SRC} -tgt ${TGT} -output ${OUTPUT} -log_file ${LOG_OUT}
+
 cd $CWD
 echo "Check results in "${OUTPUT}
