@@ -17,7 +17,7 @@ COPY setup/requirements.txt /opt/app/requirements.txt
 RUN pip install -r /opt/app/requirements.txt &&  \
     python -c "import nltk; nltk.download('punkt')" && \
     luarocks install tds && \
-    luarocks install lua-zlib \
+    luarocks install lua-zlib
 
 #ENV PYTHON_VERSION 2.7.18
 #ENV PYENV_GIT_TAG=v2.2.5
