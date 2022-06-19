@@ -7,6 +7,7 @@ RUN apt-key adv --fetch-keys https://developer.download.nvidia.com/compute/cuda/
         build-essential \
         python-dev \
         python-pip \
+        python3-pip \
         wget \
         curl \
         git \
@@ -16,6 +17,7 @@ COPY setup/requirements.txt /opt/app/requirements.txt
 
 RUN pip install -r /opt/app/requirements.txt &&  \
     python -c "import nltk; nltk.download('punkt')" && \
+    pip3 install sacrebleu pandas seaborn numpy && \
     luarocks install tds && \
     luarocks install lua-zlib
 

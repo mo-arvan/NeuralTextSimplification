@@ -13,7 +13,7 @@ Instructions for creating or organizing the artifacts of a given project.
 
 ### Docker
 ```bash
-
+source artifact/setup/env.sh
 docker build -t ${PROJECT_NAME}_image -f artifact/setup/dockerfile artifact
 
 
