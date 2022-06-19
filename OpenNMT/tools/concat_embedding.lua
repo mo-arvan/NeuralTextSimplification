@@ -174,9 +174,10 @@ local function loadEmbeddings(globalEmbeddingFilename, localEmbeddingFilename, d
     ---------------------------------------------------
     _G.logger:info('Merging the Global and Local embeddings...')
     local embeddingSize = global_embeddingSize + local_embeddingSize
-    local loaded = tds.Hash()
-    local weights = torch.Tensor(dictSize, embeddingSize)
-    weights, loaded = preloadSpecial (weights, loaded, dict, embeddingSize)
+    --local loaded = tds.Hash()
+    --local weights = torch.Tensor(dictSize, embeddingSize)
+    --weights, loaded = preloadSpecial (weights, loaded, dict, embeddingSize)
+    local weights = torch.cat(global_weights, local_weights, 2)
 
     _G.logger:info('Done')
     return weights, embeddingSize
