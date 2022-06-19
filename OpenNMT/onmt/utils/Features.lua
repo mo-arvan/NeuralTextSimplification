@@ -8,7 +8,8 @@ local function extract(tokens)
   local numFeatures = nil
 
   for t = 1, #tokens do
-    local field = onmt.utils.String.split(tokens[t], '￨')
+    local field = onmt.utils.String.split(tokens[t], '|')
+    -- ￨
     local word = field[1]
 
     if word:len() > 0 then
@@ -18,7 +19,11 @@ local function extract(tokens)
         numFeatures = #field - 1
       else
         assert(#field - 1 == numFeatures,
-               'all words must have the same number of features')
+               'all words must have the same number of features. Word ' .. word .. ' has ' .. #field-1 .. ' instead of ' .. numFeatures )
+      end
+      
+      if numFeatures == 0 then
+       --print ('This word is not right ' ..word)
       end
 
       if #field > 1 then
@@ -42,7 +47,7 @@ local function annotate(tokens, features)
 
   for i = 1, #tokens do
     for j = 1, #features do
-      tokens[i] = tokens[i] .. '￨' .. features[j][i]
+      tokens[i] = tokens[i] .. '|' .. features[j][i]
     end
   end
 

@@ -6,11 +6,11 @@ local Dataset = torch.class("Dataset")
 --]]
 function Dataset:__init(srcData, tgtData)
 
-  self.src = srcData.words or srcData.vectors
+  self.src = srcData.words
   self.srcFeatures = srcData.features
 
   if tgtData ~= nil then
-    self.tgt = tgtData.words or tgtData.vectors
+    self.tgt = tgtData.words
     self.tgtFeatures = tgtData.features
   end
 end

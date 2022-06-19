@@ -3,19 +3,19 @@ local path = require('pl.path')
 --[[ Vocabulary management utility functions. ]]
 local Vocabulary = torch.class("Vocabulary")
 
-local function countFeatures(filename, idxFile)
-  local reader = onmt.utils.FileReader.new(filename, idxFile)
+local function countFeatures(filename)
+  local reader = onmt.utils.FileReader.new(filename)
   local _, _, numFeatures = onmt.utils.Features.extract(reader:next())
   reader:close()
   return numFeatures
 end
 
-function Vocabulary.make(filename, validFunc, idxFile)
+function Vocabulary.make(filename, validFunc)
   local wordVocab = onmt.utils.Dict.new({onmt.Constants.PAD_WORD, onmt.Constants.UNK_WORD,
                                          onmt.Constants.BOS_WORD, onmt.Constants.EOS_WORD})
   local featuresVocabs = {}
 
-  local reader = onmt.utils.FileReader.new(filename, idxFile)
+  local reader = onmt.utils.FileReader.new(filename)
   local lineId = 0
 
   while true do
@@ -62,10 +62,10 @@ function Vocabulary.make(filename, validFunc, idxFile)
   return wordVocab, featuresVocabs
 end
 
-function Vocabulary.init(name, dataFile, vocabFile, vocabSize, wordsMinFrequency, featuresVocabsFiles, validFunc, idxFile)
+function Vocabulary.init(name, dataFile, vocabFile, vocabSize, wordsMinFrequency, featuresVocabsFiles, validFunc)
   local wordVocab
   local featuresVocabs = {}
-  local numFeatures = countFeatures(dataFile, idxFile)
+  local numFeatures = countFeatures(dataFile)
 
   if vocabFile:len() > 0 then
     -- If given, load existing word dictionary.
@@ -104,7 +104,7 @@ function Vocabulary.init(name, dataFile, vocabFile, vocabSize, wordsMinFrequency
   if wordVocab == nil or (#featuresVocabs == 0 and numFeatures > 0) then
     -- If a dictionary is still missing, generate it.
     _G.logger:info('Building ' .. name  .. ' vocabularies...')
-    local genWordVocab, genFeaturesVocabs = Vocabulary.make(dataFile, validFunc, idxFile)
+    local genWordVocab, genFeaturesVocabs = Vocabulary.make(dataFile, validFunc)
 
     local originalSizes = { genWordVocab:size() }
     for i = 1, #genFeaturesVocabs do

@@ -199,12 +199,6 @@ function ExtendedCmdLine:help(arg, doMd)
   end
 end
 
-function ExtendedCmdLine:error(msg)
-   print('ERROR: '..msg)
-   print('> Use -h for help\n')
-   os.exit(0)
-end
-
 function ExtendedCmdLine:option(key, default, help, _meta_)
   for _,v in ipairs(self.helplines) do
     if v.key == key then
@@ -290,8 +284,6 @@ function ExtendedCmdLine:parse(arg)
   local readConfig
   local saveConfig
 
-  local cmdlineOptions = {}
-
   while i <= #arg do
     if arg[i] == '-help' or arg[i] == '-h' or arg[i] == '--help' then
       doHelp = true
@@ -309,10 +301,6 @@ function ExtendedCmdLine:parse(arg)
       local sopt = onmt.utils.String.stripHyphens(arg[i])
       params._is_default[sopt] = nil
       if self.options[arg[i]] then
-        if cmdlineOptions[arg[i]] then
-          self:error('duplicate cmdline option: '..arg[i])
-        end
-        cmdlineOptions[arg[i]] = true
         i = i + self:__readOption__(params, arg, i)
       else
         nArgument = nArgument + 1

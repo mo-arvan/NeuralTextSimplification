@@ -14,10 +14,9 @@ Parameters:
   * `max_num_unks` - optional, maximum number of UNKs.
   * `decStates` - optional, initial decoder states.
   * `dicts` - optional, dictionary for additional features.
-  * `updateSeqLengthFunc` - optional, sequence length adaptation function after encoder
 
 --]]
-function DecoderAdvancer:__init(decoder, batch, context, max_sent_length, max_num_unks, decStates, dicts, length_norm, coverage_norm, eos_norm, updateSeqLengthFunc)
+function DecoderAdvancer:__init(decoder, batch, context, max_sent_length, max_num_unks, decStates, dicts, length_norm, coverage_norm, eos_norm)
   self.decoder = decoder
   self.batch = batch
   self.context = context
@@ -31,7 +30,6 @@ function DecoderAdvancer:__init(decoder, batch, context, max_sent_length, max_nu
     onmt.utils.Cuda.convert(torch.Tensor()),
     { self.batch.size, decoder.args.rnnSize })
   self.dicts = dicts
-  self.updateSeqLengthFunc = updateSeqLengthFunc
 end
 
 --[[Returns an initial beam.
@@ -91,13 +89,7 @@ function DecoderAdvancer:update(beam)
     inputs = { token }
     table.insert(inputs, features)
   end
-
-  local contextSizes, contextLength = sourceSizes, self.batch.sourceLength
-  if self.updateSeqLengthFunc then
-    contextSizes, contextLength = self.updateSeqLengthFunc(contextSizes, contextLength)
-  end
-
-  self.decoder:maskPadding(contextSizes, contextLength)
+  self.decoder:maskPadding(sourceSizes, self.batch.sourceLength)
   decOut, decStates = self.decoder:forwardOne(inputs, decStates, context, decOut)
   t = t + 1
   local softmaxOut = self.decoder.softmaxAttn.output

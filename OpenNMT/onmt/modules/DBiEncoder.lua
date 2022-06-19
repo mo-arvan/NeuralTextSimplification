@@ -60,7 +60,6 @@ function DBiEncoder.load(pretrained)
 
   for i=1, #pretrained.layers do
     self.layers[i] = onmt.BiEncoder.load(pretrained.layers[i])
-    self:add(self.layers[i])
   end
 
   self.args = pretrained.args
@@ -96,14 +95,7 @@ function DBiEncoder:resetPreallocation()
 end
 
 function DBiEncoder:maskPadding()
-  for _, layer in ipairs(self.layers) do
-    layer:maskPadding()
-  end
-end
-
--- size of context vector
-function DBiEncoder:contextSize(sourceSize, sourceLength)
-  return sourceSize, sourceLength
+  self.layers[1]:maskPadding()
 end
 
 function DBiEncoder:forward(batch)
@@ -123,7 +115,7 @@ function DBiEncoder:forward(batch)
   for i = 1,#self.layers do
     local layerStates, layerContext = self.layers[i]:forward(self.inputs[i])
     if i ~= #self.layers then
-      table.insert(self.inputs, onmt.data.BatchTensor.new(layerContext, batch.sourceSize))
+      table.insert(self.inputs, onmt.data.BatchTensor.new(layerContext))
     else
       context:copy(layerContext)
     end
@@ -137,22 +129,20 @@ function DBiEncoder:forward(batch)
 end
 
 function DBiEncoder:backward(batch, gradStatesOutput, gradContextOutput)
-  local gradInputs
-
   for i = #self.layers, 1, -1 do
     local lrange_gradStatesOutput
     if gradStatesOutput then
       lrange_gradStatesOutput = gradStatesOutput[{}]
     end
-    gradInputs = self.layers[i]:backward(self.inputs[i], lrange_gradStatesOutput, gradContextOutput)
+    local gradContextInput = self.layers[i]:backward(self.inputs[i], lrange_gradStatesOutput, gradContextOutput)
     if i ~= 1 then
       gradContextOutput = onmt.utils.Tensor.reuseTensor(self.gradContextProto,
-                                              { batch.size, #gradInputs, self.args.hiddenSize })
-      for t = 1, #gradInputs do
-        gradContextOutput[{{},t,{}}]:copy(gradInputs[t])
+                                              { batch.size, #gradContextInput, self.args.hiddenSize })
+      for t = 1, #gradContextInput do
+        gradContextOutput[{{},t,{}}]:copy(gradContextInput[t])
       end
     end
   end
 
-  return gradInputs
+  return gradContextOutput
 end

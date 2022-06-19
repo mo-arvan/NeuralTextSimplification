@@ -1,8 +1,11 @@
-[![Build Status](https://api.travis-ci.org/OpenNMT/OpenNMT.svg?branch=master)](https://travis-ci.org/OpenNMT/OpenNMT) [![codecov](https://codecov.io/gh/OpenNMT/OpenNMT/branch/master/graph/badge.svg)](https://codecov.io/gh/OpenNMT/OpenNMT)
+[![Build Status](https://api.travis-ci.org/OpenNMT/OpenNMT.svg?branch=master)](https://travis-ci.org/OpenNMT/OpenNMT) 
 
-# OpenNMT @ 6947f46: Open-Source Neural Machine Translation
 
-[OpenNMT](http://opennmt.net/) is a full-featured, open-source (MIT) neural machine translation system utilizing the [Torch](http://torch.ch) mathematical toolkit.
+# [OpenNMT](https://github.com/senisioi/OpenNMT/commit/28fb538c5b692bfda7918196793ee3d7b93e66da): Open-Source Neural Machine Translation
+
+<a href="https://opennmt.github.io/">OpenNMT</a> is a full-featured,
+open-source (MIT) neural machine translation system utilizing the
+[Torch](http://torch.ch) mathematical toolkit.
 
 <center style="padding: 40px"><img width="70%" src="http://opennmt.github.io/simple-attn.png" /></center>
 
@@ -54,7 +57,7 @@ For more details, visit the [documentation](http://opennmt.net/OpenNMT/).
 
 ## Citation
 
-A [technical report](https://arxiv.org/abs/1701.02810) on OpenNMT is available. If you use the system for academic work, please cite:
+A <a href="https://arxiv.org/abs/1701.02810">technical report</a> on OpenNMT is available. If you use the system for academic work, please cite:
 
 ```
 @ARTICLE{2017opennmt,
@@ -67,9 +70,9 @@ A [technical report](https://arxiv.org/abs/1701.02810) on OpenNMT is available. 
 
 ## Additional resources
 
-* [Documentation](http://opennmt.net/OpenNMT)
-* [Example models](http://opennmt.net/Models)
-* [Forum](http://forum.opennmt.net)
-* [Gitter channel](https://gitter.im/OpenNMT/openmt)
-* [Live demo](https://demo-pnmt.systran.net)
-* [Bibliography](http://opennmt.net/about)
+* <a href="http://opennmt.github.io/OpenNMT">Documentation</a>
+* <a href="http://opennmt.github.io/Models">Example models</a>
+* <a href="http://forum.opennmt.net">Forum</a>
+* <a href="https://gitter.im/OpenNMT/openmt">Gitter channel</a>
+* <a href="https://demo-pnmt.systran.net">Live demo</a>
+* <a href="http://opennmt.github.io/about">Bibliography</a>

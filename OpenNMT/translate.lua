@@ -17,10 +17,6 @@ local options = {
   {
     '-output', 'pred.txt',
     [[Output file.]]
-  },
-  {
-    '-idx_files', false,
-    [[If set, source and target files are 'key value' with key match between source and target.]]
   }
 }
 
@@ -46,15 +42,10 @@ local function main()
   local opt = cmd:parse(arg)
 
   _G.logger = onmt.utils.Logger.new(opt.log_file, opt.disable_logs, opt.log_level)
-  _G.profiler = onmt.utils.Profiler.new()
-
   onmt.utils.Cuda.init(opt)
 
-  local translator = onmt.translate.Translator.new(opt)
-
-  local srcReader = onmt.utils.FileReader.new(opt.src, opt.idx_files, translator:srcFeat())
+  local srcReader = onmt.utils.FileReader.new(opt.src)
   local srcBatch = {}
-  local srcIdBatch = {}
 
   local goldReader
   local goldBatch
@@ -62,9 +53,11 @@ local function main()
   local withGoldScore = opt.tgt:len() > 0
 
   if withGoldScore then
-    goldReader = onmt.utils.FileReader.new(opt.tgt, opt.idx_files)
+    goldReader = onmt.utils.FileReader.new(opt.tgt)
     goldBatch = {}
   end
+
+  local translator = onmt.translate.Translator.new(opt)
 
   local outFile = io.open(opt.output, 'w')
   for n = 1, translator.nBest do
@@ -89,25 +82,23 @@ local function main()
   end
 
   while true do
-    local srcSeq, srcSeqId = srcReader:next()
-
-    local goldOutputSeq
+    local srcTokens = srcReader:next()
+    local goldTokens
     if withGoldScore then
-      goldOutputSeq = goldReader:next()
+      goldTokens = goldReader:next()
     end
 
-    if srcSeq ~= nil then
-      table.insert(srcBatch, translator:buildInput(srcSeq))
-      table.insert(srcIdBatch, srcSeqId)
+    if srcTokens ~= nil then
+      table.insert(srcBatch, translator:buildInput(srcTokens))
 
       if withGoldScore then
-        table.insert(goldBatch, translator:buildInputGold(goldOutputSeq))
+        table.insert(goldBatch, translator:buildInput(goldTokens))
       end
     elseif #srcBatch == 0 then
       break
     end
 
-    if srcSeq == nil or #srcBatch == opt.batch_size then
+    if srcTokens == nil or #srcBatch == opt.batch_size then
       if opt.time then
         timer:resume()
       end
@@ -119,15 +110,11 @@ local function main()
       end
 
       for b = 1, #results do
-        if (srcBatch[b].words and #srcBatch[b].words == 0) then
+        if (#srcBatch[b].words == 0) then
           _G.logger:warning('Line ' .. sentId .. ' is empty.')
           outFile:write('\n')
         else
-          if srcBatch[b].words then
-            _G.logger:info('SENT %d: %s', sentId, translator:buildOutput(srcBatch[b]))
-          else
-            _G.logger:info('FEATS %d: IDX - %s - SIZE %d', sentId, srcIdBatch[b], srcBatch[b].vectors:size(1))
-          end
+          _G.logger:info('SENT %d: %s', sentId, translator:buildOutput(srcBatch[b]))
 
           if withGoldScore then
             _G.logger:info('GOLD %d: %s', sentId, translator:buildOutput(goldBatch[b]), results[b].goldScore)
@@ -154,6 +141,9 @@ local function main()
                   _G.logger:info('')
                   _G.logger:info('BEST HYP:')
                 end
+
+
+
               end
 
               if #results[b].preds > 1 then
@@ -169,13 +159,12 @@ local function main()
         sentId = sentId + 1
       end
 
-      if srcSeq == nil then
+      if srcTokens == nil then
         break
       end
 
       batchId = batchId + 1
       srcBatch = {}
-      srcIdBatch = {}
       if withGoldScore then
         goldBatch = {}
       end

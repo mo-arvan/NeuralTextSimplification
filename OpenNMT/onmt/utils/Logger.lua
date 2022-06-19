@@ -50,6 +50,7 @@ function Logger:__init(logFile, disableLogs, logLevel)
     self:setVisibleLevel(logLevel)
   end
   local openMode = 'w'
+  --[[
   local f = io.open(logFile, 'r')
   if f then
     f:close()
@@ -68,6 +69,7 @@ function Logger:__init(logFile, disableLogs, logLevel)
       end
     end
   end
+  ]]--
   if string.len(logFile) > 0 then
     self.logFile = io.open(logFile, openMode)
   else

@@ -60,11 +60,10 @@ function Cuda.init(opt, masterGPU)
         end
 
         _G.logger:info('Using GPU(s): ' .. table.concat(Cuda.gpuIds, ', '))
+      end
 
-        if cutorch.isCachingAllocatorEnabled and cutorch.isCachingAllocatorEnabled() then
-          _G.logger:warning('The caching CUDA memory allocator is enabled. This allocator improves performance at the cost of a higher GPU memory usage. To optimize for memory, consider disabling it by setting the environment variable: THC_CACHING_ALLOCATOR=0')
-        end
-
+      if cutorch.isCachingAllocatorEnabled and cutorch.isCachingAllocatorEnabled() then
+        _G.logger:warning('The caching CUDA memory allocator is enabled. This allocator improves performance at the cost of a higher GPU memory usage. To optimize for memory, consider disabling it by setting the environment variable: THC_CACHING_ALLOCATOR=0')
       end
 
       cutorch.setDevice(Cuda.gpuIds[masterGPU])
