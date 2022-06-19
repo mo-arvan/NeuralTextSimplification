@@ -1,0 +1,23 @@
+﻿Object,Measurand,Code by,Comp./trained by,Method,Implem. by,Procedure,Test set,Performed by,Measured quantity value
+NTS_def,BLEU,Nisioi et al.,Nisioi et al.,"bleu(o,t) ",Nisioi et al.,OTE ,Nisioi et al.,Nisioi et al.,84.510000000000005
+NTS_def,BLEU,Nisioi et al.,Nisioi et al.,"bleu(o,t) ",Nisioi et al.,OTE ,Nisioi et al.,Coop. & Shard. ,84.5
+NTS_def,BLEU,Nisioi et al.,Nisioi et al.,"bleu(o,t) ",≈Nisioi et al.,OTE ,Nisioi et al.,Belz et al.,85.599999999999994
+NTS_def,BLEU,Nisioi et al.,Nisioi et al.,"bleu(o,t) ",sacreBLEU,OTE ,Nisioi et al.,Belz et al.,84.200000000000003
+NTS_def,BLEU,Nisioi et al.,Coop. & Shard. ,"bleu(o,t) ",Nisioi et al.,OTE ,Nisioi et al.,Coop. & Shard. ,87.459999999999994
+NTS_def,BLEU,Nisioi et al.,Belz et al.,"bleu(o,t) ",≈Nisioi et al.,OTE ,Nisioi et al.,Belz et al.,86.609999999999999
+NTS_def,BLEU,Nisioi et al.,Belz et al.,"bleu(o,t) ",sacreBLEU,OTE ,Nisioi et al.,Belz et al.,86.200000000000003
+NTS_def,SARI,Nisioi et al.,Nisioi et al.,"sari(o,s,t)",Nisioi et al.,OITE,Nisioi et al.,Nisioi et al.,30.649999999999999
+NTS_def,SARI,Nisioi et al.,Nisioi et al.,"sari(o,s,t)",Nisioi et al.,OITE,Nisioi et al.,Coop. & Shard. ,30.649999999999999
+NTS_def,SARI,Nisioi et al.,Nisioi et al.,"sari(o,s,t)",Nisioi et al.,OITE,Nisioi et al.,Belz et al.,30.649999999999999
+NTS_def,SARI,Nisioi et al.,Coop. & Shard. ,"sari(o,s,t)",Nisioi et al.,OITE,Nisioi et al.,Coop. & Shard. ,29.129999999999999
+NTS_def,SARI,Nisioi et al.,Belz et al.,"sari(o,s,t)",Nisioi et al.,OITE,Nisioi et al.,Belz et al.,29.960000000000001
+NTS-w2v_def,BLEU,Nisioi et al.,Nisioi et al.,"bleu(o,t) ",Nisioi et al.,OTE ,Nisioi et al.,Nisioi et al.,87.5
+NTS-w2v_def,BLEU,Nisioi et al.,Nisioi et al.,"bleu(o,t) ",≈Nisioi et al.,OTE ,Nisioi et al.,Belz et al.,89.359999999999999
+NTS-w2v_def,BLEU,Nisioi et al.,Nisioi et al.,"bleu(o,t) ",sacreBLEU,OTE ,Nisioi et al.,Belz et al.,88.099999999999994
+NTS-w2v_def,BLEU,Nisioi et al.,Coop. & Shard. ,"bleu(o,t) ",Nisioi et al.,OTE ,Nisioi et al.,Coop. & Shard. ,80.75
+NTS-w2v_def,BLEU,Nisioi et al.,Belz et al.,"bleu(o,t) ",≈Nisioi et al.,OTE ,Nisioi et al.,Belz et al.,89.640000000000001
+NTS-w2v_def,BLEU,Nisioi et al.,Belz et al.,"bleu(o,t) ",sacreBLEU,OTE ,Nisioi et al.,Belz et al.,88.799999999999997
+NTS-w2v_def,SARI,Nisioi et al.,Nisioi et al.,"sari(o,s,t)",Nisioi et al.,OITE,Nisioi et al.,Nisioi et al.,31.109999999999999
+NTS-w2v_def,SARI,Nisioi et al.,Nisioi et al.,"sari(o,s,t)",Nisioi et al.,OITE,Nisioi et al.,Belz et al.,31.109999999999999
+NTS-w2v_def,SARI,Nisioi et al.,Coop. & Shard. ,"sari(o,s,t)",Nisioi et al.,OITE,Nisioi et al.,Coop. & Shard. ,30.280000000000001
+NTS-w2v_def,SARI,Nisioi et al.,Belz et al.,"sari(o,s,t)",Nisioi et al.,OITE,Nisioi et al.,Belz et al.,29.120000000000001
