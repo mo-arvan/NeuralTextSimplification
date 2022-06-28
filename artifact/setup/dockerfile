@@ -15,9 +15,10 @@ RUN apt-key adv --fetch-keys https://developer.download.nvidia.com/compute/cuda/
         git \
         software-properties-common
 
-RUN pip install -r /workspace/artifacts/setup/requirements.txt &&  \
+RUN pip install -r /workspace/artifact/setup/requirements.txt &&  \
     python -c "import nltk; nltk.download('punkt')" && \
-    wget -q -P /opt/app 'https://github.com/RaRe-Technologies/gensim-data/releases/download/word2vec-google-news-300/word2vec-google-news-300.gz' && \
+    wget -q -P /workspace/w2v-google-news 'https://github.com/RaRe-Technologies/gensim-data/releases/download/word2vec-google-news-300/word2vec-google-news-300.gz' && \
+    gunzip /workspace/w2v-google-news/word2vec-google-news-300.gz && \
     pip3 install sacrebleu pandas seaborn numpy && \
     luarocks install tds && \
     luarocks install lua-zlib
