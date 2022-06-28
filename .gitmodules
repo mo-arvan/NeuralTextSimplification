@@ -1,4 +1,0 @@
-[submodule "OpenNMT"]
-	path = OpenNMT
-	url = https://github.com/senisioi/OpenNMT.git
-	branch = acl17
