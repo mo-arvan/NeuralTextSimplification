@@ -1,5 +1,7 @@
 FROM nagadomi/torch7:cuda10.1-cudnn7-devel-ubuntu18.04
 
+COPY . /workspace
+
 RUN apt-key adv --fetch-keys https://developer.download.nvidia.com/compute/cuda/repos/ubuntu1804/x86_64/3bf863cc.pub && \
     git config --global url."https://".insteadOf git:// && \
     apt-get update &&  \
@@ -13,11 +15,9 @@ RUN apt-key adv --fetch-keys https://developer.download.nvidia.com/compute/cuda/
         git \
         software-properties-common
 
-COPY setup/requirements.txt /opt/app/requirements.txt
-
-RUN pip install -r /opt/app/requirements.txt &&  \
+RUN pip install -r /workspace/artifacts/setup/requirements.txt &&  \
     python -c "import nltk; nltk.download('punkt')" && \
-    wget -P /opt/app 'https://github.com/RaRe-Technologies/gensim-data/releases/download/word2vec-google-news-300/word2vec-google-news-300.gz' && \
+    wget -q -P /opt/app 'https://github.com/RaRe-Technologies/gensim-data/releases/download/word2vec-google-news-300/word2vec-google-news-300.gz' && \
     pip3 install sacrebleu pandas seaborn numpy && \
     luarocks install tds && \
     luarocks install lua-zlib

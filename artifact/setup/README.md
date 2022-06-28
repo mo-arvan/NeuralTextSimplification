@@ -13,8 +13,8 @@ Instructions for creating or organizing the artifacts of a given project.
 
 ### Docker
 ```bash
-source artifact/setup/env.sh
-docker build -t ${PROJECT_NAME}_image -f artifact/setup/dockerfile artifact
+source artifact/scripts/env.sh
+docker build -t ${PROJECT_NAME}_image -f artifact/setup/dockerfile .
 
 
 docker run --rm --ipc=host --gpus all -v ${PWD}:/workspace -it ${PROJECT_NAME}_image bash
