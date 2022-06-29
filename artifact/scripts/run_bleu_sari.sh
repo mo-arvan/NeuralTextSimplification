@@ -4,7 +4,7 @@ SRC=/workspace/data/test.en
 TGT=/workspace/data/test.sen
 TGT_REF=/workspace/data/references/test_references.tsv
 export BLEU_SARI_EXPORT_DIR="/workspace/nts_output/bleu_sari/"
-mkdir -p $SACREBLEU_EXPORT_DIR
+mkdir -p $BLEU_SARI_EXPORT_DIR
 
 export TRANSLATION_DIR="/workspace/artifact/results/translations/o1"
 
