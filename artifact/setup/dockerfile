@@ -1,6 +1,5 @@
 FROM nagadomi/torch7:cuda10.1-cudnn7-devel-ubuntu18.04
 
-COPY . /workspace
 
 RUN apt-key adv --fetch-keys https://developer.download.nvidia.com/compute/cuda/repos/ubuntu1804/x86_64/3bf863cc.pub && \
     git config --global url."https://".insteadOf git:// && \
@@ -14,6 +13,11 @@ RUN apt-key adv --fetch-keys https://developer.download.nvidia.com/compute/cuda/
         curl \
         git \
         software-properties-common
+
+
+RUN mkdir /workspace && \
+    cd /workspace && \
+    git clone git@github.com:mo-arvan/NeuralTextSimplification.git
 
 RUN pip install -r /workspace/artifact/setup/requirements.txt &&  \
     python -c "import nltk; nltk.download('punkt')" && \

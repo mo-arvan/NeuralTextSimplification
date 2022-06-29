@@ -11,8 +11,6 @@ docker build -t ${PROJECT_NAME}_image -f NeuralTextSimplification/artifact/setup
 
 docker save --output ${PROJECT_NAME}_image.tar ${PROJECT_NAME}_image
 
-docker run --rm --ipc=host --gpus all -v ${PWD}/output:/workspace/nts_output -it ${PROJECT_NAME}_image bash
-
 # inside the container, run the required commands
 
 ```
