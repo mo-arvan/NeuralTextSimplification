@@ -21,4 +21,4 @@ SRC=${DIRECTORY}/dev_eval.en
 TGT=${DIRECTORY}/dev_eval.sen
 TGT_REF=${DIRECTORY}/references/dev_references.tsv
 
-source /workspace/artifact/scripts/translate_and_eval_base.sh
+source /workspace/artifact/scripts/translate_base.sh
