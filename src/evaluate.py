@@ -119,7 +119,7 @@ def score(source, refs, fold, METRIC_file, preprocess=as_is):
     return data
 
 
-def export_to_csv(sari_results, bleu_results, source, refs, fold):
+def export_to_csv(sari_results, bleu_results, source, refs, fold, output_dir):
     fields = ['Metric', 'File', 'Variant', 'Epoch', 'Hypothesis', 'Perplexity', 'Score']
 
     file_pattern = r"result_(?P<variant>\S+)?_epoch(?P<epoch>\d+)_(?P<perplexity>\d+\.\d+)"
@@ -147,10 +147,10 @@ def export_to_csv(sari_results, bleu_results, source, refs, fold):
                              metric_score])
             # print("\t".join([whichone, "{:10.2f}".format(v), k, hypothesis]))
     source, refs, fold = os.path.basename(source), os.path.basename(refs), os.path.basename(fold)
-    results_file_name = "evaluation_results_{}_{}_{}_{}.csv".format(source,
-                                                                    refs,
-                                                                    fold,
-                                                                    time.strftime("%Y%m%d-%H%M%S"))
+    results_file_name = os.path.join(output_dir,
+                                     "evaluation_results_{}_{}_{}.csv".format(source,
+                                                                              refs,
+                                                                              fold))
 
     with open(results_file_name, 'w') as csvfile:
         csvwriter = csv.writer(csvfile)
@@ -166,7 +166,10 @@ if __name__ == '__main__':
         refs = sys.argv[2]
         logging.info("References in tsv format: " + refs)
         fold = sys.argv[3]
-        logging.info("Directory of predictions: " + fold)
+        logging.info("Directory of translation: " + fold)
+        output_dir = sys.argv[4]
+        logging.info("Output directory: " + fold)
+
     except:
         logging.error("Input parameters must be: " + sys.argv[0]
                       + "    SOURCE_FILE    REFS_TSV (paste -d \"\t\" * > reference.tsv)    DIRECTORY_OF_PREDICTIONS")
@@ -187,4 +190,4 @@ if __name__ == '__main__':
                os.path.basename(refs).replace('.ref', '').replace("test_0_", "")
     print_scores(sari_test, "SARI\t" + whichone)
     print_scores(bleu_test, "BLEU\t" + whichone)
-    export_to_csv(sari_test, bleu_test, source, refs, fold)
+    export_to_csv(sari_test, bleu_test, source, refs, fold, output_dir)
