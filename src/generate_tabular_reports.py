@@ -22,18 +22,22 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--csv_empirical_results_dir", type=str)
     parser.add_argument("--json_empirical_results_dir", type=str)
+    parser.add_argument("--previous_results", type=str)
     # parser.add_argument("--sacrebleu_output", type=str)
     parser.add_argument("--table_output_dir", type=str)
 
     args = parser.parse_args()
     csv_empirical_results_dir = args.csv_empirical_results_dir
     json_empirical_results_dir = args.json_empirical_results_dir
+    previous_results_csv = args.previous_results
 
     results_dict = {}
     for file_name in os.listdir(csv_empirical_results_dir):
         if file_name.endswith(".csv") and "dev_eval" not in file_name and "search" not in file_name:
             full_path = os.path.join(csv_empirical_results_dir, file_name)
             results_dict[os.path.splitext(file_name)[0]] = pd.read_csv(full_path)
+
+    results_dict["previous_results"] = pd.read_csv(previous_results_csv)
 
     sacreblue_result_list = []
     for file_name in os.listdir(json_empirical_results_dir):
@@ -60,7 +64,7 @@ def main():
                 file_content = file_content.merge(best_result, how="inner")
             # may have multiple rows with the same perplexity
             results_dict[file_name] = file_content
-            print("")
+
     evaluation_results_df = pd.concat(
         [file_content for file_name, file_content in results_dict.items() if "evaluation" in file_name])
 
