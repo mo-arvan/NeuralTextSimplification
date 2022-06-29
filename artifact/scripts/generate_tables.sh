@@ -1,0 +1,9 @@
+#!/bin/bash
+
+python3 src/pretty_print_results.py --valid_result_csv /workspace/artifact/results/empirical/evaluation_results_dev_eval.en_dev_references.tsv_nts_w2v_validation_translation_20220612-010006.csv --test_result_csv /workspace/artifact/results/empirical/evaluation_results_test.en_references.tsv_nts_w2v_test_translation_20220611-231531.csv  --sacrebleu_output /workspace/artifact/results/empirical/sacrebleu --table_output /workspace/artifact/results/table/table_w2v.tex
+
+python3 src/pretty_print_results.py --test_result_csv /workspace/artifact/results/empirical/evaluation_results_test.en_references.tsv_predictions_20220606-225048.csv --sacrebleu_output /workspace/artifact/results/empirical/sacrebleu --table_output /workspace/artifact/results/table/table_predictions.tex
+
+python3 src/pretty_print_results.py --valid_result_csv /workspace/artifact/results/empirical/evaluation_results_dev_eval.en_dev_references.tsv_nts_original_translation_20220606-220104.csv --test_result_csv /workspace/artifact/results/empirical/evaluation_results_test.en_references.tsv_nts_original_test_translation_20220606-221243.csv  --sacrebleu_output /workspace/artifact/results/empirical/sacrebleu --table_output /workspace/artifact/results/table/table_original.tex
+
+python3 src/pretty_print_results.py --valid_result_csv /workspace/artifact/results/empirical/evaluation_results_dev_eval.en_dev_references.tsv_nts_arvan_validation_translation_20220607-022846.csv --test_result_csv /workspace/artifact/results/empirical/evaluation_results_test.en_references.tsv_nts_arvan_test_translation_20220607-022016.csv  --sacrebleu_output /workspace/artifact/results/empirical/sacrebleu --table_output /workspace/artifact/results/table/table_arvan.tex
