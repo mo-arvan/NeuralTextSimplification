@@ -68,7 +68,7 @@ def main():
     evaluation_results_df = pd.concat(
         [file_content for file_name, file_content in results_dict.items() if "evaluation" in file_name])
 
-    excluded_variants = ["contaminated", "word2vec", "mismatched", "b12"]
+    excluded_variants = ["contaminated", "mismatched", "b12"]
     for excluded_variant in excluded_variants:
         evaluation_results_df = evaluation_results_df[~evaluation_results_df["File"].str.contains(excluded_variant)]
 
