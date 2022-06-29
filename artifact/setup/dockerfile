@@ -15,9 +15,7 @@ RUN apt-key adv --fetch-keys https://developer.download.nvidia.com/compute/cuda/
         software-properties-common
 
 
-RUN mkdir /workspace && \
-    git clone https://github.com/mo-arvan/NeuralTextSimplification.git && \
-    mv NeuralTextSimplification/* /workspace
+RUN git clone https://github.com/mo-arvan/NeuralTextSimplification.git /workspace
 
 RUN pip install -r /workspace/artifact/setup/requirements.txt &&  \
     python -c "import nltk; nltk.download('punkt')" && \
