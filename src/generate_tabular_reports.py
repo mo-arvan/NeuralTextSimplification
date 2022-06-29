@@ -86,7 +86,7 @@ def main():
     evaluation_results_df["Test set"] = "Nisioi et al."
     evaluation_results_df["Performed by"] = "this paper"
     evaluation_results_df["Object"] = evaluation_results_df["File"].apply(
-        lambda x: "NTS-w2v_def" if "w2v" in x else "NTS_def")
+        lambda x: "NTS-w2v_def" if ("w2v" in x or "word2vec" in x) else "NTS_def")
     evaluation_results_df["Method"] = evaluation_results_df["Measurand"].apply(
         lambda x: "bleu(o,t)" if "BLEU" == x else "sari(o,s,t)")
     evaluation_results_df["Procedure"] = evaluation_results_df["Measurand"].apply(
@@ -105,7 +105,7 @@ def main():
     sacreblue_df["Test set"] = "Nisioi et al."
     sacreblue_df["Performed by"] = "this paper"
     sacreblue_df["Object"] = sacreblue_df["File"].apply(
-        lambda x: "NTS-w2v_def" if "w2v" in x else "NTS_def")
+        lambda x: "NTS-w2v_def" if ("w2v" in x or "word2vec" in x) else "NTS_def")
     sacreblue_df["Method"] = sacreblue_df["Measurand"].apply(
         lambda x: "bleu(o,t)" if "BLEU" == x else "sari(o,s,t)")
     sacreblue_df["Procedure"] = sacreblue_df["Measurand"].apply(
