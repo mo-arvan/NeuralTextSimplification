@@ -1,8 +1,8 @@
 #!/bin/bash
 
-SRC=${DIRECTORY}/test.en
-TGT=${DIRECTORY}/test.sen
-TGT_REF=${DIRECTORY}/references/references.tsv
+SRC=/workspace/data/test.en
+TGT=/workspace/data/test.sen
+TGT_REF=/workspace/data/references/references.tsv
 export BLEU_SARI_EXPORT_DIR="/workspace/nts_output/bleu_sari/"
 mkdir -p $SACREBLEU_EXPORT_DIR
 
