@@ -1,5 +1,7 @@
 FROM nagadomi/torch7:cuda10.1-cudnn7-devel-ubuntu18.04
 
+# move from context to /workspace
+COPY . /workspace
 
 RUN apt-key adv --fetch-keys https://developer.download.nvidia.com/compute/cuda/repos/ubuntu1804/x86_64/3bf863cc.pub && \
     git config --global url."https://".insteadOf git:// && \
@@ -15,13 +17,11 @@ RUN apt-key adv --fetch-keys https://developer.download.nvidia.com/compute/cuda/
         software-properties-common
 
 
-RUN git clone https://github.com/mo-arvan/NeuralTextSimplification.git /workspace
-
 RUN pip install -r /workspace/artifact/setup/requirements.txt &&  \
     python -c "import nltk; nltk.download('punkt')" && \
-    wget -P /workspace/w2v-google-news 'https://github.com/RaRe-Technologies/gensim-data/releases/download/word2vec-google-news-300/word2vec-google-news-300.gz' && \
+    wget -q -P /workspace/w2v-google-news 'https://github.com/RaRe-Technologies/gensim-data/releases/download/word2vec-google-news-300/word2vec-google-news-300.gz' && \
     gunzip /workspace/w2v-google-news/word2vec-google-news-300.gz && \
-    pip3 install sacrebleu pandas seaborn numpy && \
+    pip3 install sacrebleu==2.1.0 pandas seaborn numpy && \
     luarocks install tds && \
     luarocks install lua-zlib
 

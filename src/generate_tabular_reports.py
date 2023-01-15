@@ -39,6 +39,8 @@ def main():
 
     results_dict["previous_results"] = pd.read_csv(previous_results_csv)
 
+    # This is extremely dirty, but it is still better than manually editing the final table, at least, there will be a chance to recreate the table without having to manually edit it again.
+
     sacreblue_result_list = []
     for file_name in os.listdir(json_empirical_results_dir):
         if file_name.endswith(".json"):
@@ -77,7 +79,6 @@ def main():
 
     evaluation_results_df.sort_values(by=["Metric", "Variant"], inplace=True)
 
-    final_table_df = results_dict["previous_results"]
     evaluation_results_df.rename(columns={"Metric": "Measurand",
                                           "Score": "Measured quantity value"},
                                  inplace=True)
@@ -114,17 +115,26 @@ def main():
         lambda x: "Nisioi et al." if "NTS" in x else "this paper")
     sacreblue_df["Comp. by"] = sacreblue_df["File"].apply(
         lambda x: "this paper" if "result" in x else "Nisioi et al.")
+
     # sacreblue_df["Comp./trained by"] = sacreblue_df["File"].apply(
     #     lambda x: "Nisioi et al." if "NTS" in x else "this paper")
 
-    final_table_df.rename(columns={"Comp./trained by": "Comp. by"}, inplace=True)
-    final_table_df.insert(3, "Trained by", "")
-    final_table_df["Trained by"] = final_table_df["Comp. by"].apply(lambda x: x if x == 'Coop. & Shard. '
-    else "Nisioi et al.")
+    def get_previous_results_comp_by(x):
+        if x == 'Coop. & Shard. ':
+            return x
+        else:
+            return "Nisioi et al."
 
-    final_table_df = pd.concat([final_table_df,
-                                evaluation_results_df[final_table_df.columns.values],
-                                sacreblue_df[final_table_df.columns.values]])
+    previous_results_df = results_dict["previous_results"]
+    previous_results_df.rename(columns={"Comp./trained by": "Comp. by"}, inplace=True)
+    previous_results_df.insert(3, "Trained by", "")
+    previous_results_df["Trained by"] = previous_results_df["Comp. by"].apply(get_previous_results_comp_by)
+
+    columns_list = previous_results_df.columns.values.tolist()
+    final_table_df = pd.concat([
+        previous_results_df,
+        evaluation_results_df[columns_list],
+        sacreblue_df[columns_list]])
     final_table_df.sort_values(["Object", "Measurand", "Performed by"], inplace=True)
     precision_table_df = None
     for precision_object in set(final_table_df["Object"]):
@@ -173,6 +183,9 @@ def main():
                                inplace=True)
     table_output_dir = args.table_output_dir
 
+    arvan_contribution_df = final_table_df.loc[final_table_df["Performed by"] == "t4"]
+
+    arvan_contribution_df.to_csv(os.path.join(table_output_dir, "arvan_table_df.csv"))
     final_table_df.to_csv(os.path.join(table_output_dir, "final_table_df.csv"))
     summary_columns = ["Object",
                        "Measurand",
@@ -183,8 +196,13 @@ def main():
                        "Performed by",
                        "Measured quantity value"
                        ]
+    arvan_contribution_df[summary_columns].to_csv(os.path.join(table_output_dir, "arvan_table_summary_df.csv"))
     final_table_df[summary_columns].to_csv(os.path.join(table_output_dir, "final_table_summary_df.csv"))
     precision_table_df.to_csv(os.path.join(table_output_dir, "precision_table_df.csv"))
+
+    arvan_contribution_df.to_latex(os.path.join(table_output_dir, "arvan_table_df.tex"),
+                                   index=False,
+                                   formatters=[str] * (len(final_table_df.dtypes) - 1) + [float_formatter])
 
     final_table_df.to_latex(os.path.join(table_output_dir, "final_table_df.tex"),
                             index=False,
@@ -193,6 +211,13 @@ def main():
                                              index=False,
                                              formatters=[str] * (len(final_table_df[summary_columns].dtypes) - 1) + [
                                                  float_formatter])
+
+    arvan_contribution_df[summary_columns].to_latex(os.path.join(table_output_dir, "arvan_table_summary_df.tex"),
+                                                    index=False,
+                                                    formatters=[str] * (
+                                                            len(final_table_df[summary_columns].dtypes) - 1) + [
+                                                                   float_formatter])
+
     precision_table_df.to_latex(os.path.join(table_output_dir, "precision_table_df.tex"),
                                 index=False,
                                 formatters=[str, str, float_formatter,
