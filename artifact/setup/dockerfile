@@ -19,9 +19,8 @@ RUN git clone https://github.com/mo-arvan/NeuralTextSimplification.git /workspac
 
 RUN pip install -r /workspace/artifact/setup/requirements.txt &&  \
     python -c "import nltk; nltk.download('punkt')" && \
-    wget -q -P /workspace/w2v-google-news 'https://github.com/RaRe-Technologies/gensim-data/releases/download/word2vec-google-news-300/word2vec-google-news-300.gz' && \
+    wget -P /workspace/w2v-google-news 'https://github.com/RaRe-Technologies/gensim-data/releases/download/word2vec-google-news-300/word2vec-google-news-300.gz' && \
     gunzip /workspace/w2v-google-news/word2vec-google-news-300.gz && \
-    rm /workspace/w2v-google-news/word2vec-google-news-300.gz \
     pip3 install sacrebleu pandas seaborn numpy && \
     luarocks install tds && \
     luarocks install lua-zlib

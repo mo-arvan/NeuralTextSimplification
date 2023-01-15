@@ -12,8 +12,7 @@ mkdir output
 
 Now you can generate the results of table 3 and 4 using the commands below.
 ```bash
-docker run --rm --ipc=host --gpus all -v ${PWD}/output:/workspace/nts_output -it ${PROJECT_NAME}_image bash artifact/scrip
-ts/table_3_4.sh
+docker run --rm --gpus all -v ${PWD}/output:/workspace/nts_output -it ${PROJECT_NAME}_image bash artifact/scripts/table_3_4.sh
 ```
 
 Further instructions on achieving the other results of other table are available in [GitHub](https://github.com/mo-arvan/NeuralTextSimplification/tree/master/artifact). 

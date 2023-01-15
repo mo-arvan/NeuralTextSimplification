@@ -87,7 +87,11 @@ def main():
         valid_plot.savefig(table_output + ".svg")
     else:
         test_result.drop(columns=["Perplexity"], inplace=True)
+        test_result = test_result[test_result["Hypothesis"] == "1"]
         test_result[["Variant"]] = test_result[["File"]]
+        test_result["Eval Script by"] = "t1"
+        test_result.rename(columns={
+            "Test": "Measured Value"}, inplace=True)
         final_results = test_result
 
     if sacrebleu_output is not None:
@@ -101,13 +105,18 @@ def main():
 
         sacrebleu_df = pd.DataFrame(sacrebleu_results)
         sacrebleu_df.rename(columns={"name": "Metric",
-                                     "score": "Sacre Test"}, inplace=True)
-        final_results = final_results.merge(sacrebleu_df[["File",
-                                                          "Metric",
-                                                          "Sacre Test", ]],
-                                            on=["File",
-                                                "Metric"],
-                                            how="left")
+                                     "score": "Measured Value"}, inplace=True)
+        # sacrebleu_df = sacrebleu_df.merge(final_results[["File", "Variant"]], on=["File"], how="left")
+        sacrebleu_df["Eval Script by"] = "sb2.1"
+
+        final_results = pd.concat([sacrebleu_df[["File",
+                                                 "Metric",
+                                                 "Eval Script by",
+                                                 "Measured Value"]],
+                                   final_results[["File",
+                                                  "Metric",
+                                                  "Eval Script by",
+                                                  "Measured Value"]]])
 
     # final_results.rename(columns={'Score_x': 'Test BLEU',
     #                               'Score_y': 'Test SARI',
@@ -117,23 +126,32 @@ def main():
     #                               # "Perplexity_x": "Val Perplexity"
     #                               },
     #                      inplace=True)
+    def get_variant_name(x: str):
+        name = ""
+        if x.startswith("result_nts_word2vec_4_contaminated"):
+            name = "NTS w2v †"
+        if x.startswith("result_nts_word2vec_3_mismatched"):
+            name = "NTS w2v ‡"
+        if x.startswith("result_nts_word2vec_5"):
+            name = "NTS w2v"
+        if x.startswith("result_nts_word2vec_1_contaminated_mismatched"):
+            name = "NTS w2v †‡"
+        return name
 
     # pretty_final_result = final_results[["Variant", "Val Perplexity", "Val BLEU", "Val SARI", 'Test BLEU', 'Test SARI']]
+    final_results = final_results[list(map(lambda x: "word2vec" in x, final_results["File"]))]
+    final_results['File'] = final_results['File'].apply(get_variant_name)
+    final_results.rename(columns={"File": "Object"}, inplace=True)
 
-    final_results.drop(columns=['File', 'Epoch', 'Hypothesis'], inplace=True)
-    variant_metric_column_name = ["Variant", "Metric"]
-    column_list = [c for c in list(final_results.columns) if c not in variant_metric_column_name]
-    final_results = final_results[[*variant_metric_column_name, *column_list]]
+    final_results.sort_values(by=["Object", "Metric", "Eval Script by"], ascending=[True, True, False], inplace=True)
+    # final_results.drop(columns=['File', 'Epoch', 'Hypothesis'], inplace=True)
 
-    latex_formatters = [str, str] + [float_formatter] * (len(final_results.dtypes) - 2)
+    latex_formatters = [str, str, str, float_formatter]
 
-    #
     pretty_final_result = final_results
     pretty_final_result.to_latex(table_output,
                                  index=False,
                                  formatters=latex_formatters)
-    print("")
-
 
 if __name__ == '__main__':
     main()
